@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"flag"
 	"net/http"
-	"os"
+	// "os"
 	"strings"
 	"time"
 
@@ -19,6 +19,7 @@ var (
 	Version       = "0.0.0.dev"
 	listenAddress = flag.String("web.listen-address", ":9161", "Address to listen on for web interface and telemetry.")
 	metricPath    = flag.String("web.telemetry-path", "/metrics", "Path under which to expose metrics.")
+	dsn           = flag.String("data-source-name", "", "Oracle data source name string")
 	landingPage   = []byte("<html><head><title>Oracle DB Exporter " + Version + "</title></head><body><h1>Oracle DB Exporter " + Version + "</h1><p><a href='" + *metricPath + "'>Metrics</a></p></body></html>")
 )
 
@@ -435,8 +436,8 @@ func cleanName(s string) string {
 func main() {
 	flag.Parse()
 	log.Infoln("Starting oracledb_exporter " + Version)
-	dsn := os.Getenv("DATA_SOURCE_NAME")
-	exporter := NewExporter(dsn)
+	// dsn := os.Getenv("DATA_SOURCE_NAME")
+	exporter := NewExporter(*dsn)
 	prometheus.MustRegister(exporter)
 	http.Handle(*metricPath, prometheus.Handler())
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
