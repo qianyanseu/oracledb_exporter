@@ -19,6 +19,14 @@ deploy:
     tags: true
 
 after_success:
-  docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
-  docker push iamseth/oracledb_exporter:${TRAVIS_TAG:-latest}
+  - cd ./dist
+  - git init
+  - git config --global user.name 'Jon'
+  - git config --global user.email 'qianyanseu@gmail.com'
+  - git add .
+  - git commit -m "oracledb_exporter release, triggerd by travis ci"
+  - git push --force "https://wangming1993:${REPO_TOKEN}@${GH_REF}" master:master
 
+env:
+  global:
+    - GH_REF: github.com/qianyanseu/oracledb_exporter_release.git
