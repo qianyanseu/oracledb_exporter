@@ -19,7 +19,7 @@ var (
 	Version       = "0.0.0.dev"
 	listenAddress = flag.String("web.listen-address", ":9161", "Address to listen on for web interface and telemetry.")
 	metricPath    = flag.String("web.telemetry-path", "/metrics", "Path under which to expose metrics.")
-	// data source name
+	// data source name from shell parameters
 	dsn           = flag.String("data-source-name", "", "Oracle data source name string")
 	landingPage   = []byte("<html><head><title>Oracle DB Exporter " + Version + "</title></head><body><h1>Oracle DB Exporter " + Version + "</h1><p><a href='" + *metricPath + "'>Metrics</a></p></body></html>")
 )
